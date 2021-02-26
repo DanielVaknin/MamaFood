@@ -43,7 +43,6 @@ public class MealsFragment extends Fragment {
             @Override
             public void onItemClick(int position) {
                 Log.d("TAG", "row was clicked " + position);
-
             }
         });
 

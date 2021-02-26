@@ -5,6 +5,7 @@ public class Meal {
     private String name;
     private String seller;
     private Double price;
+    private String imageUrl;
 
     public String getId() {
         return id;
@@ -36,5 +37,13 @@ public class Meal {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
