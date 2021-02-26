@@ -3,6 +3,7 @@ package com.daniel.mamafood.model;
 public class Meal {
     private String id;
     private String name;
+    private String description;
     private String seller;
     private Double price;
     private String imageUrl;
@@ -21,6 +22,14 @@ public class Meal {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getSeller() {

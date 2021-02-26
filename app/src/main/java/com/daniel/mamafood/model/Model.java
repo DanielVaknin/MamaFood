@@ -1,34 +1,50 @@
 package com.daniel.mamafood.model;
 
+import android.graphics.Bitmap;
+
 import java.util.LinkedList;
 import java.util.List;
 
 public class Model {
-    List<Meal> data = new LinkedList<>();
+    public static final Model instance = new Model();
 
-    public final static Model instance = new Model();
+    ModelFirebase modelFirebase = new ModelFirebase();
 
-    private Model(){
-        Meal meal1 = new Meal();
-        meal1.setName("test");
-        meal1.setPrice(137.5);
-        data.add(meal1);
+    private Model(){}
 
-        Meal meal2 = new Meal();
-        meal2.setName("test2");
-        meal2.setPrice((double) 154);
-        data.add(meal2);
+    public interface Listener<T> {
+        void onComplete(T result);
     }
 
-    public List<Meal> getAllMeals() {
-        return data;
+    public interface GetAllMealsListener extends Listener<List<Meal>> {}
+    public void getAllMeals(GetAllMealsListener listener){
+        modelFirebase.getAllMeals(listener);
     }
 
-    public Meal getMealById(String id) {
-        for (Meal m : data) {
-            if (m.getId().equals(id))
-                return m;
-        }
-        return null;
+    public interface GetMealListener extends Listener<Meal>{}
+    public void getMeal(String id, GetMealListener listener) {
+        modelFirebase.getMeal(id, listener);
+    }
+
+    public interface AddMealListener {
+        void onComplete();
+    }
+    public void addMeal(Meal meal, AddMealListener listener){
+        modelFirebase.addMeal(meal, listener);
+    }
+
+    public interface UpdateMealListener extends AddMealListener {}
+    public void updateMeal(Meal meal, UpdateMealListener listener){
+        modelFirebase.updateMeal(meal, listener);
+    }
+
+    public interface DeleteMealListener extends AddMealListener {}
+    public void deleteMeal(Meal meal, DeleteMealListener listener) {
+        modelFirebase.deleteMeal(meal, listener);
+    }
+
+    public interface UploadImageListener extends Listener<String> {}
+    public void uploadImage(Bitmap imageBmp, String name, final UploadImageListener listener){
+        modelFirebase.uploadImage(imageBmp, name, listener);
     }
 }
