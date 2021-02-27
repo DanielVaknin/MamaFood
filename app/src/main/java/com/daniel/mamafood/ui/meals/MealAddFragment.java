@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.daniel.mamafood.R;
 import com.daniel.mamafood.model.Meal;
@@ -42,6 +43,7 @@ public class MealAddFragment extends Fragment {
     EditText priceEditText;
     Button saveBtn;
     Button cancelBtn;
+    ProgressBar pb;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,6 +58,8 @@ public class MealAddFragment extends Fragment {
         priceEditText = view.findViewById(R.id.addmeal_price_edittext);
         saveBtn = view.findViewById(R.id.addmeal_save_btn);
         cancelBtn = view.findViewById(R.id.addmeal_cancel_btn);
+        pb = view.findViewById(R.id.meal_add_pb);
+        pb.setVisibility(View.INVISIBLE);
 
         editImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +86,8 @@ public class MealAddFragment extends Fragment {
     }
 
     private void saveMeal(View view) {
-        if (nameEditText.getText().equals("") || descEditText.getText().equals("") || priceEditText.getText().equals("")) {
+        pb.setVisibility(View.VISIBLE);
+        if (nameEditText.getText().length() == 0 || descEditText.getText().length() == 0 || priceEditText.getText().length() == 0) {
             Snackbar.make(view, "You must provide a value for each of the fields", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
             Log.d("TAG", "One of more of the meal fields is empty.");
@@ -116,6 +121,7 @@ public class MealAddFragment extends Fragment {
                 }
             });
         }
+        pb.setVisibility(View.INVISIBLE);
     }
 
     private void displayFailedError() {
