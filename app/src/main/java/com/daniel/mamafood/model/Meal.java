@@ -1,12 +1,44 @@
 package com.daniel.mamafood.model;
 
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.FieldValue;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class Meal {
     private String id;
     private String name;
     private String description;
-    private String seller;
     private Double price;
     private String imageUrl;
+    private String userId;
+    private Long lastUpdated;
+
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("id", id);
+        result.put("name", name);
+        result.put("description", description);
+        result.put("price", price);
+        result.put("imageUrl", imageUrl);
+        result.put("userId", userId);
+        result.put("lastUpdated", FieldValue.serverTimestamp());
+
+        return result;
+    }
+
+    public void fromMap(Map<String, Object> map) {
+        id = (String)map.get("id");
+        name = (String)map.get("name");
+        description = (String)map.get("description");
+        price = (Double)map.get("price");
+        imageUrl = (String)map.get("imageUrl");
+        userId = (String)map.get("userId");
+
+        Timestamp ts = (Timestamp) map.get("lastUpdated");
+        lastUpdated = ts.getSeconds();
+    }
 
     public String getId() {
         return id;
@@ -32,14 +64,6 @@ public class Meal {
         this.description = description;
     }
 
-    public String getSeller() {
-        return seller;
-    }
-
-    public void setSeller(String seller) {
-        this.seller = seller;
-    }
-
     public Double getPrice() {
         return price;
     }
@@ -54,5 +78,21 @@ public class Meal {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public Long getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(Long lastUpdated) {
+        this.lastUpdated = lastUpdated;
     }
 }
