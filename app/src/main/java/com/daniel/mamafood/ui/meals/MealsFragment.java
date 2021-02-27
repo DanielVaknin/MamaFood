@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,10 +23,10 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.List;
 
 public class MealsFragment extends Fragment {
+    MealsViewModel viewModel;
 
     RecyclerView mealList;
     ProgressBar pb;
-    List<Meal> data;
     FloatingActionButton fab;
     MealsAdapter adapter;
 
@@ -34,6 +35,8 @@ public class MealsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_meals, container, false);
+
+        viewModel = new ViewModelProvider(this).get(MealsViewModel.class);
 
         fab = view.findViewById(R.id.appbarmain_add_meal);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -54,15 +57,10 @@ public class MealsFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         mealList.setLayoutManager(layoutManager);
 
-        Model.instance.getAllMeals(new Model.GetAllMealsListener() {
-            @Override
-            public void onComplete(List<Meal> result) {
-                data = result;
-            }
-        });
+        Model.instance.getAllMeals(result -> viewModel.setMealList(result));
 
         adapter = new MealsAdapter(getLayoutInflater());
-        adapter.data = data;
+        adapter.data = viewModel.getMealList();
         mealList.setAdapter(adapter);
 
         adapter.setOnClickListener(new MealsAdapter.OnItemClickListener() {
@@ -82,13 +80,12 @@ public class MealsFragment extends Fragment {
         Model.instance.getAllMeals(new Model.GetAllMealsListener() {
             @Override
             public void onComplete(List<Meal> result) {
-                data = result;
-                for (Meal meal : data) {
+                viewModel.setMealList(result);
+                for (Meal meal : viewModel.getMealList()) {
                     Log.d("TAG", "Meal id: " + meal.getId());
                 }
                 pb.setVisibility(View.INVISIBLE);
                 fab.setEnabled(true);
-                adapter.notifyDataSetChanged();
             }
         });
     }
