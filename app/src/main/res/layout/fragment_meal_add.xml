@@ -29,11 +29,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginTop="70dp"
         android:text="Price:"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/addmeal_save_btn"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <EditText
         android:id="@+id/addmeal_desc_edittext"
@@ -45,7 +45,6 @@
         android:gravity="start|top"
         android:inputType="textMultiLine|textPersonName"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/textView2"
@@ -116,6 +115,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="16dp"
         android:text="CANCEL"
+        app:backgroundTint="#555353"
         app:layout_constraintBottom_toBottomOf="@+id/addmeal_save_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -128,13 +128,15 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
         android:text="SAVE"
+        app:backgroundTint="#4CAF50"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/addmeal_cancel_btn"
         app:layout_constraintHorizontal_bias="0.48"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <ProgressBar
         android:id="@+id/meal_add_pb"

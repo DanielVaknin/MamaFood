@@ -29,6 +29,6 @@
     <fragment
         android:id="@+id/mealAddFragment"
         android:name="com.daniel.mamafood.ui.meals.MealAddFragment"
-        android:label="fragment_meal_add"
+        android:label="Add Meal"
         tools:layout="@layout/fragment_meal_add" />
 </navigation>
