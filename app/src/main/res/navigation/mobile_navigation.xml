@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_nav_meals_to_mealAdd"
             app:destination="@id/mealAddFragment" />
+        <action
+            android:id="@+id/action_nav_meals_to_loginFragment"
+            app:destination="@id/loginFragment" />
     </fragment>
 
     <fragment
@@ -31,4 +34,9 @@
         android:name="com.daniel.mamafood.ui.meals.MealAddFragment"
         android:label="Add Meal"
         tools:layout="@layout/fragment_meal_add" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.daniel.mamafood.ui.login.loginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
 </navigation>

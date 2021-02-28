@@ -21,6 +21,8 @@ import com.daniel.mamafood.model.Meal;
 import com.daniel.mamafood.model.Model;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
@@ -32,6 +34,8 @@ public class MealsFragment extends Fragment {
     FloatingActionButton fab;
     MealsAdapter adapter;
     SwipeRefreshLayout sref;
+    FirebaseAuth mAuth;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,15 +44,21 @@ public class MealsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_meals, container, false);
 
         viewModel = new ViewModelProvider(this).get(MealsViewModel.class);
+        mAuth = FirebaseAuth.getInstance();
 
         // Floating action Button
         fab = view.findViewById(R.id.appbarmain_add_meal);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.action_nav_meals_to_mealAdd);
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
+                FirebaseUser currentUser = mAuth.getCurrentUser();
+                // Check if user is signed in (non-null) and update UI accordingly.
+                if(currentUser != null){
+                    Navigation.findNavController(view).navigate(R.id.action_nav_meals_to_mealAdd);
+                }
+                else {
+                    Navigation.findNavController(view).navigate(R.id.action_nav_meals_to_loginFragment);
+                }
             }
         });
 
