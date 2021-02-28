@@ -31,7 +31,6 @@ public class loginFragment extends Fragment {
 
         signinBtn = view.findViewById(R.id.signin_button);
 
-
         signinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

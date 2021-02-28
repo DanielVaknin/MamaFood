@@ -52,13 +52,16 @@ public class MealsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FirebaseUser currentUser = mAuth.getCurrentUser();
+                // Will be replaced with the below IF condition when it will work - we will check if the user is already signed in - if so,
+                // we will navigate to "add meal" page, else, we will navigate to login page
+                Navigation.findNavController(view).navigate(R.id.action_nav_meals_to_mealAdd);
                 // Check if user is signed in (non-null) and update UI accordingly.
-                if(currentUser != null){
-                    Navigation.findNavController(view).navigate(R.id.action_nav_meals_to_mealAdd);
-                }
-                else {
-                    Navigation.findNavController(view).navigate(R.id.action_nav_meals_to_loginFragment);
-                }
+//                if(currentUser != null){
+//                    Navigation.findNavController(view).navigate(R.id.action_nav_meals_to_mealAdd);
+//                }
+//                else {
+//                    Navigation.findNavController(view).navigate(R.id.action_nav_meals_to_loginFragment);
+//                }
             }
         });
 
