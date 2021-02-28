@@ -10,6 +10,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -23,10 +24,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class ModelFirebase {
-    public void getAllMeals(Model.GetAllMealsListener listener) {
+    public void getAllMeals(Long lastUpdated, final Model.GetAllMealsListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-
+        Timestamp ts = new Timestamp(lastUpdated, 0);
         db.collection("meals")
+                .whereGreaterThanOrEqualTo("lastUpdated", ts)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -34,7 +36,9 @@ public class ModelFirebase {
                         List<Meal> data = new LinkedList<>();
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                data.add(document.toObject(Meal.class));
+                                Meal meal = new Meal();
+                                meal.fromMap(document.getData());
+                                data.add(meal);
                                 Log.d("TAG", document.getId() + " => " + document.getData());
                             }
                         } else {
@@ -54,7 +58,8 @@ public class ModelFirebase {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        meal = document.toObject(Meal.class);
+                        meal = new Meal();
+                        meal.fromMap(document.getData());
                     } else {
                         Log.d("TAG", "No such document");
                     }
@@ -67,7 +72,7 @@ public class ModelFirebase {
     public void addMeal(Meal meal, Model.AddMealListener listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("meals").document(meal.getId())
-                .set(meal)
+                .set(meal.toMap())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -88,17 +93,18 @@ public class ModelFirebase {
         addMeal(meal, listener);
     }
 
-    public void deleteMeal(Meal meal, Model.DeleteMealListener listener) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("meals").document(meal.getId())
-                .delete()
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        listener.onComplete();
-                    }
-                });
-    }
+    // TODO: Fix this with a delete marker on a meal to know when a meal is deleted
+//    public void deleteMeal(Meal meal, Model.DeleteMealListener listener) {
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        db.collection("meals").document(meal.getId())
+//                .delete()
+//                .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Void> task) {
+//                        listener.onComplete();
+//                    }
+//                });
+//    }
 
     public void uploadImage(Bitmap imageBmp, String name, Model.UploadImageListener listener) {
         FirebaseStorage storage = FirebaseStorage.getInstance();

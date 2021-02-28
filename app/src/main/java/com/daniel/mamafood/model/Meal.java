@@ -1,12 +1,19 @@
 package com.daniel.mamafood.model;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FieldValue;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Entity
 public class Meal {
+    @PrimaryKey
+    @NonNull
     private String id;
     private String name;
     private String description;
@@ -14,6 +21,7 @@ public class Meal {
     private String imageUrl;
     private String userId;
     private Long lastUpdated;
+    private Boolean isDeleted;
 
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
@@ -24,6 +32,7 @@ public class Meal {
         result.put("imageUrl", imageUrl);
         result.put("userId", userId);
         result.put("lastUpdated", FieldValue.serverTimestamp());
+        result.put("isDeleted", isDeleted);
 
         return result;
     }
@@ -38,6 +47,8 @@ public class Meal {
 
         Timestamp ts = (Timestamp) map.get("lastUpdated");
         lastUpdated = ts.getSeconds();
+
+        isDeleted = (Boolean) map.get("isDeleted");
     }
 
     public String getId() {
@@ -94,5 +105,13 @@ public class Meal {
 
     public void setLastUpdated(Long lastUpdated) {
         this.lastUpdated = lastUpdated;
+    }
+
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
     }
 }

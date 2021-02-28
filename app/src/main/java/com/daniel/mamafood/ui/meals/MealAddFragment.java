@@ -98,9 +98,10 @@ public class MealAddFragment extends Fragment {
             meal.setName(nameEditText.getText().toString());
             meal.setDescription(descEditText.getText().toString());
             meal.setPrice(Double.parseDouble(priceEditText.getText().toString()));
+            meal.setDeleted(false);
 
-            // TODO: add seller to meal
-            // meal.setSeller();
+            // TODO: add user id to meal
+//            meal.setUserId();
 
             BitmapDrawable drawable = (BitmapDrawable) avatarImageView.getDrawable();
             Model.instance.uploadImage(drawable.getBitmap(), meal.getId(), new Model.UploadImageListener() {
