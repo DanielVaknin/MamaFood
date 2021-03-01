@@ -17,15 +17,20 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    final private ListItemClickListener mOnClickListener;
 
     Context context;
     List<Meal> mealArrayList;
 
-    public RecyclerViewAdapter(Context context, List<Meal> mealArrayList) {
+    public RecyclerViewAdapter(Context context, List<Meal> mealArrayList, ListItemClickListener onClickListener) {
         this.context = context;
         this.mealArrayList = mealArrayList;
+        this.mOnClickListener = onClickListener;
     }
 
+    public interface ListItemClickListener{
+        void onListItemClick(int position);
+    }
 
     @NonNull
     @Override
@@ -55,16 +60,24 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return mealArrayList.size();
     }
 
-    class RecyclerViewViewHolder extends RecyclerView.ViewHolder {
+    class RecyclerViewViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView imgView_icon;
         TextView txtView_name;
         TextView txtView_price;
 
         public RecyclerViewViewHolder(@NonNull View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
+
             imgView_icon = itemView.findViewById(R.id.meal_row_image);
             txtView_name = itemView.findViewById(R.id.meal_row_name);
             txtView_price = itemView.findViewById(R.id.meal_row_price);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            mOnClickListener.onListItemClick(position);
         }
     }
 }

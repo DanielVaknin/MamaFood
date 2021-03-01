@@ -1,6 +1,7 @@
 package com.daniel.mamafood.ui.meals;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,7 +92,12 @@ public class MealsFragment extends Fragment {
     Observer<List<Meal>> mealListUpdateObserver = new Observer<List<Meal>>() {
         @Override
         public void onChanged(List<Meal> mealArrayList) {
-            recyclerViewAdapter = new RecyclerViewAdapter(getContext(), mealArrayList);
+            recyclerViewAdapter = new RecyclerViewAdapter(getContext(), mealArrayList, new RecyclerViewAdapter.ListItemClickListener() {
+                @Override
+                public void onListItemClick(int position) {
+                    Log.d("TAG", "Row was clicked: " + position);
+                }
+            });
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.setAdapter(recyclerViewAdapter);
         }
