@@ -43,25 +43,23 @@ public class MealsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_meals, container, false);
 
-        viewModel = new ViewModelProvider(this).get(MealsViewModel.class);
+        // Check if user is logged-in
+        // Will be replaced with the below IF condition when it will work - we will check if the user is already signed in - if so,
+        // we will navigate to "add meal" page, else, we will navigate to login page
         mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser == null) {
+            Navigation.findNavController(this.getActivity(), R.id.nav_host_fragment).navigate(R.id.action_nav_meals_to_loginFragment);
+        }
+
+        viewModel = new ViewModelProvider(this).get(MealsViewModel.class);
 
         // Floating action Button
         fab = view.findViewById(R.id.appbarmain_add_meal);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseUser currentUser = mAuth.getCurrentUser();
-                // Will be replaced with the below IF condition when it will work - we will check if the user is already signed in - if so,
-                // we will navigate to "add meal" page, else, we will navigate to login page
                 Navigation.findNavController(view).navigate(R.id.action_nav_meals_to_mealAdd);
-                // Check if user is signed in (non-null) and update UI accordingly.
-//                if(currentUser != null){
-//                    Navigation.findNavController(view).navigate(R.id.action_nav_meals_to_mealAdd);
-//                }
-//                else {
-//                    Navigation.findNavController(view).navigate(R.id.action_nav_meals_to_loginFragment);
-//                }
             }
         });
 
