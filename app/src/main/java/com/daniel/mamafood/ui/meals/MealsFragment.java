@@ -1,7 +1,6 @@
 package com.daniel.mamafood.ui.meals;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,25 +15,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.daniel.mamafood.R;
-import com.daniel.mamafood.adapters.MealsAdapter;
+import com.daniel.mamafood.adapters.RecyclerViewAdapter;
 import com.daniel.mamafood.model.Meal;
 import com.daniel.mamafood.model.Model;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
 public class MealsFragment extends Fragment {
     MealsViewModel viewModel;
 
-    RecyclerView mealList;
     ProgressBar pb;
     FloatingActionButton fab;
-    MealsAdapter adapter;
     SwipeRefreshLayout sref;
     FirebaseAuth mAuth;
+
+    RecyclerView recyclerView;
+    RecyclerViewAdapter recyclerViewAdapter;
 
 
     @Override
@@ -46,13 +44,11 @@ public class MealsFragment extends Fragment {
         // Check if user is logged-in
         // Will be replaced with the below IF condition when it will work - we will check if the user is already signed in - if so,
         // we will navigate to "add meal" page, else, we will navigate to login page
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser == null) {
-            Navigation.findNavController(this.getActivity(), R.id.nav_host_fragment).navigate(R.id.action_nav_meals_to_loginFragment);
-        }
-
-        viewModel = new ViewModelProvider(this).get(MealsViewModel.class);
+//        mAuth = FirebaseAuth.getInstance();
+//        FirebaseUser currentUser = mAuth.getCurrentUser();
+//        if (currentUser == null) {
+//            Navigation.findNavController(this.getActivity(), R.id.nav_host_fragment).navigate(R.id.action_nav_meals_to_loginFragment);
+//        }
 
         // Floating action Button
         fab = view.findViewById(R.id.appbarmain_add_meal);
@@ -67,7 +63,16 @@ public class MealsFragment extends Fragment {
         sref = view.findViewById(R.id.meal_list_swipe);
         sref.setOnRefreshListener(() -> {
             sref.setRefreshing(true);
-            reloadData();
+            pb.setVisibility(View.VISIBLE);
+            fab.setEnabled(false);
+            Model.instance.refreshAllMeals(new Model.GetAllMealsListener() {
+                @Override
+                public void onComplete(List<Meal> result) {
+                    sref.setRefreshing(false);
+                    pb.setVisibility(View.INVISIBLE);
+                    fab.setEnabled(true);
+                }
+            });
         });
 
         // Progress bar
@@ -75,47 +80,20 @@ public class MealsFragment extends Fragment {
         pb.setVisibility(View.INVISIBLE);
 
         // Meal list
-        mealList = view.findViewById(R.id.meal_list_rv);
-        mealList.setHasFixedSize(true);
+        recyclerView = view.findViewById(R.id.meal_list_rv);
+        recyclerView.setHasFixedSize(true);
+        viewModel = new ViewModelProvider(this).get(MealsViewModel.class);
+        viewModel.getMealLiveData().observe(getViewLifecycleOwner(), mealListUpdateObserver);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        mealList.setLayoutManager(layoutManager);
-
-//        Model.instance.getAllMeals(result -> viewModel.setMealList(result));
-
-        adapter = new MealsAdapter(getLayoutInflater());
-//        adapter.data = viewModel.getMealList();
-        mealList.setAdapter(adapter);
-
-        adapter.setOnClickListener(new MealsAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                Log.d("TAG", "row was clicked " + position);
-            }
-        });
-
-        viewModel.getMealList().observe(getViewLifecycleOwner(), new Observer<List<Meal>>() {
-            @Override
-            public void onChanged(List<Meal> students) {
-                adapter.notifyDataSetChanged();
-            }
-        });
-        reloadData();
         return view;
     }
 
-    void reloadData() {
-        pb.setVisibility(View.VISIBLE);
-        fab.setEnabled(false);
-        Model.instance.refreshAllMeals(new Model.GetAllMealsListener() {
-            @Override
-            public void onComplete(List<Meal> result) {
-                pb.setVisibility(View.INVISIBLE);
-                fab.setEnabled(true);
-                sref.setRefreshing(false);
-//                adapter.data = result;
-                adapter.notifyDataSetChanged();
-            }
-        });
-    }
+    Observer<List<Meal>> mealListUpdateObserver = new Observer<List<Meal>>() {
+        @Override
+        public void onChanged(List<Meal> mealArrayList) {
+            recyclerViewAdapter = new RecyclerViewAdapter(getContext(), mealArrayList);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            recyclerView.setAdapter(recyclerViewAdapter);
+        }
+    };
 }

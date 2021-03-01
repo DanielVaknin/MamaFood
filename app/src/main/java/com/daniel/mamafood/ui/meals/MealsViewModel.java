@@ -6,17 +6,18 @@ import androidx.lifecycle.ViewModel;
 import com.daniel.mamafood.model.Meal;
 import com.daniel.mamafood.model.Model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MealsViewModel extends ViewModel {
 
-    private LiveData<List<Meal>> mealList;
+    LiveData<List<Meal>> mealLiveData;
 
-    public MealsViewModel(){
-        mealList = Model.instance.getAllMeals();
+    public MealsViewModel() {
+        mealLiveData = Model.instance.getAllMeals();
     }
 
-    LiveData<List<Meal>> getMealList() {
-        return mealList;
+    public LiveData<List<Meal>> getMealLiveData() {
+        return mealLiveData;
     }
 }
