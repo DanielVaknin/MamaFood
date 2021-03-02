@@ -1,5 +1,6 @@
 package com.daniel.mamafood.ui.login;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -47,6 +48,13 @@ public class loginFragment extends Fragment {
         signinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                final ProgressDialog progressDialog = new ProgressDialog(getActivity(),
+                        R.style.Theme_AppCompat_DayNight_Dialog);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setMessage("Authenticating...");
+                progressDialog.show();
+
                 EditText emailEditText = view.findViewById(R.id.login_email_edittext);
                 EditText passwordEditText = view.findViewById(R.id.login_password_edittext);
 
@@ -62,18 +70,19 @@ public class loginFragment extends Fragment {
                                     Log.d("TAG", "signInWithEmail:success");
                                     FirebaseUser user = mAuth.getCurrentUser();
                                     Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_nav_meals);
+                                    progressDialog.dismiss();
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.w("TAG", "signInWithEmail:failure", task.getException());
                                     Toast.makeText(getActivity().getApplicationContext(), "Authentication failed.",
                                             Toast.LENGTH_SHORT).show();
                                     mySnackbar = Snackbar.make(view, "Failed Login", 20);
+                                    progressDialog.dismiss();
                                 }
                             }
                         });
             }
         });
-
         return view;
     }
 }
