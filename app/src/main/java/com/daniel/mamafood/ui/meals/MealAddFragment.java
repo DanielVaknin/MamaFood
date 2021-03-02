@@ -41,6 +41,7 @@ public class MealAddFragment extends Fragment {
     EditText nameEditText;
     EditText descEditText;
     EditText priceEditText;
+    EditText addressEditText;
     Button saveBtn;
     Button cancelBtn;
     ProgressBar pb;
@@ -56,6 +57,7 @@ public class MealAddFragment extends Fragment {
         nameEditText = view.findViewById(R.id.addmeal_name_edittext);
         descEditText = view.findViewById(R.id.addmeal_desc_edittext);
         priceEditText = view.findViewById(R.id.addmeal_price_edittext);
+        addressEditText = view.findViewById(R.id.addmeal_address_edittext);
         saveBtn = view.findViewById(R.id.addmeal_save_btn);
         cancelBtn = view.findViewById(R.id.addmeal_cancel_btn);
         pb = view.findViewById(R.id.meal_add_pb);
@@ -98,6 +100,7 @@ public class MealAddFragment extends Fragment {
             meal.setName(nameEditText.getText().toString());
             meal.setDescription(descEditText.getText().toString());
             meal.setPrice(Double.parseDouble(priceEditText.getText().toString()));
+            meal.setAddress(addressEditText.getText().toString());
             meal.setDeleted(false);
 
             // TODO: add user id to meal

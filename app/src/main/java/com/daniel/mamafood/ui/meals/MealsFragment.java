@@ -21,6 +21,7 @@ import com.daniel.mamafood.model.Meal;
 import com.daniel.mamafood.model.Model;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
@@ -45,18 +46,19 @@ public class MealsFragment extends Fragment {
         // Check if user is logged-in
         // Will be replaced with the below IF condition when it will work - we will check if the user is already signed in - if so,
         // we will navigate to "add meal" page, else, we will navigate to login page
-//        mAuth = FirebaseAuth.getInstance();
-//        FirebaseUser currentUser = mAuth.getCurrentUser();
-//        if (currentUser == null) {
-//            Navigation.findNavController(this.getActivity(), R.id.nav_host_fragment).navigate(R.id.action_nav_meals_to_loginFragment);
-//        }
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser == null) {
+            //return inflater.inflate(R.layout.fragment_login, container, false);
+            Navigation.findNavController(this.getActivity(), R.id.nav_host_fragment).navigate(R.id.action_nav_meals_to_loginFragment);
+        }
 
         // Floating action Button
         fab = view.findViewById(R.id.appbarmain_add_meal);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.action_nav_meals_to_mealAdd);
+                Navigation.findNavController(view).navigate(R.id.action_nav_meals_to_mealAddFragment);
             }
         });
 
