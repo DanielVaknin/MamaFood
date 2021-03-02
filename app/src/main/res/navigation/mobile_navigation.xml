@@ -32,11 +32,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.daniel.mamafood.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
-    <fragment
         android:id="@+id/mealAddFragment"
         android:name="com.daniel.mamafood.ui.meals.MealAddFragment"
         android:label="Add Meal"
@@ -54,7 +49,7 @@
         tools:layout="@layout/fragment_login" />
     <fragment
         android:id="@+id/mapsFragment"
-        android:name="com.daniel.mamafood.MapsFragment"
-        android:label="fragment_maps"
+        android:name="com.daniel.mamafood.ui.map.MapsFragment"
+        android:label="Meals Map"
         tools:layout="@layout/fragment_maps" />
 </navigation>
