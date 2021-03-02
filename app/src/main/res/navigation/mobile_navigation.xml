@@ -11,7 +11,7 @@
         android:label="@string/menu_meals"
         tools:layout="@layout/fragment_meals" >
         <action
-            android:id="@+id/action_nav_meals_to_mealAdd"
+            android:id="@+id/action_nav_meals_to_mealAddFragment"
             app:destination="@id/mealAddFragment" />
         <action
             android:id="@+id/action_nav_meals_to_loginFragment"

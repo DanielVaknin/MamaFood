@@ -1,5 +1,6 @@
 package com.daniel.mamafood.ui.meals;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -21,22 +22,13 @@ public class MealDetailsFragment extends MealAddFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_meal_add, container, false);
-
-        avatarImageView = view.findViewById(R.id.addmeal_avatar_imageview);
-        editImage = view.findViewById(R.id.addmeal_edit_image_btn);
-        nameEditText = view.findViewById(R.id.addmeal_name_edittext);
-        descEditText = view.findViewById(R.id.addmeal_desc_edittext);
-        priceEditText = view.findViewById(R.id.addmeal_price_edittext);
-        saveBtn = view.findViewById(R.id.addmeal_save_btn);
-        cancelBtn = view.findViewById(R.id.addmeal_cancel_btn);
-        pb = view.findViewById(R.id.meal_add_pb);
-        pb.setVisibility(View.INVISIBLE);
+        View view = super.onCreateView(inflater, container, savedInstanceState);
 
         editImage.setVisibility(View.INVISIBLE);
         nameEditText.setEnabled(false);
         descEditText.setEnabled(false);
         priceEditText.setEnabled(false);
+        addressEditText.setEnabled(false);
         saveBtn.setVisibility(View.INVISIBLE);
         cancelBtn.setVisibility(View.INVISIBLE);
         pb.setVisibility(View.INVISIBLE);
@@ -49,7 +41,9 @@ public class MealDetailsFragment extends MealAddFragment {
             public void onComplete(Meal meal) {
                 nameEditText.setText(meal.getName());
                 descEditText.setText(meal.getDescription());
+                addressEditText.setText(meal.getAddress());
                 priceEditText.setText(meal.getPrice().toString());
+
                 if (meal.getImageUrl() != null){
                     Picasso.get().load(meal.getImageUrl()).placeholder(R.drawable.meal_placeholder).into(avatarImageView);
                 }
