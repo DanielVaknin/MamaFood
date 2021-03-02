@@ -58,7 +58,7 @@ public class MealsFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.action_nav_meals_to_mealAdd);
+                Navigation.findNavController(view).navigate(R.id.action_nav_meals_to_mealAddFragment);
             }
         });
 
