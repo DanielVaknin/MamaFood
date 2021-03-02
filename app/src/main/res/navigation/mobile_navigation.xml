@@ -19,10 +19,14 @@
     </fragment>
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.daniel.mamafood.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_logout"
+        android:name="com.daniel.mamafood.ui.login.LogoutFragment"
+        android:label="@string/menu_login"
+        tools:layout="@layout/fragment_logout" >
+        <action
+            android:id="@+id/action_nav_logout_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_slideshow"
@@ -37,6 +41,10 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.daniel.mamafood.ui.login.loginFragment"
-        android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        android:label="@string/menu_login"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_nav_meals"
+            app:destination="@id/nav_meals" />
+    </fragment>
 </navigation>
