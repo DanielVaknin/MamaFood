@@ -44,8 +44,6 @@ public class loginFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         signinBtn = view.findViewById(R.id.signin_button);
 
-
-
         signinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
