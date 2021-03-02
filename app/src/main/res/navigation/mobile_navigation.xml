@@ -11,14 +11,14 @@
         android:label="@string/menu_meals"
         tools:layout="@layout/fragment_meals" >
         <action
+            android:id="@+id/action_nav_meals_to_mealAddFragment"
+            app:destination="@id/mealAddFragment" />
+        <action
             android:id="@+id/action_nav_meals_to_loginFragment"
             app:destination="@id/loginFragment" />
         <action
-            android:id="@+id/action_nav_meals_to_mapsFragment"
-            app:destination="@id/mapsFragment" />
-        <action
-            android:id="@+id/action_nav_meals_to_mealAddFragment"
-            app:destination="@id/mealAddFragment" />
+            android:id="@+id/action_nav_meals_to_mealDetails"
+            app:destination="@id/mealDetailsFragment" />
     </fragment>
 
     <fragment
@@ -47,6 +47,15 @@
     </fragment>
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/mealDetailsFragment"
+        android:name="com.daniel.mamafood.ui.meals.MealDetailsFragment"
+        android:label="Meal Details"
+        tools:layout="@layout/fragment_meal_details">
+        <argument
+            android:name="mealId"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/mapsFragment"
         android:name="com.daniel.mamafood.ui.map.MapsFragment"

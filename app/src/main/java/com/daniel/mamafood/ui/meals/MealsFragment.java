@@ -98,6 +98,9 @@ public class MealsFragment extends Fragment {
                 @Override
                 public void onListItemClick(int position) {
                     Log.d("TAG", "Row was clicked: " + position);
+                    String mealId = viewModel.getMealLiveData().getValue().get(position).getId();
+                    MealsFragmentDirections.ActionNavMealsToMealDetails direction = MealsFragmentDirections.actionNavMealsToMealDetails(mealId);
+                    Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(direction);
                 }
             });
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
