@@ -1,6 +1,7 @@
 package com.daniel.mamafood.adapters;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.daniel.mamafood.R;
 import com.daniel.mamafood.model.Meal;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -48,6 +51,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         viewHolder.txtView_name.setText(meal.getName());
         viewHolder.txtView_price.setText(meal.getPrice().toString());
 
+        // Get seller name
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            String name = user.getDisplayName();
+            viewHolder.txtView_seller.setText(name);
+        }
+
         // Get image from Firestore using Picasso
         viewHolder.imgView_icon.setImageResource(R.drawable.meal_placeholder); // So that we'll first show the empty avatar as the load takes time
         if (meal.getImageUrl() != null) {
@@ -64,6 +74,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         ImageView imgView_icon;
         TextView txtView_name;
         TextView txtView_price;
+        TextView txtView_seller;
 
         public RecyclerViewViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -72,6 +83,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             imgView_icon = itemView.findViewById(R.id.meal_row_image);
             txtView_name = itemView.findViewById(R.id.meal_row_name);
             txtView_price = itemView.findViewById(R.id.meal_row_price);
+            txtView_seller = itemView.findViewById(R.id.meal_row_seller);
         }
 
         @Override
