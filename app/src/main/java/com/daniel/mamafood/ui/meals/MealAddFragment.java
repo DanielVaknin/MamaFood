@@ -30,7 +30,6 @@ import com.daniel.mamafood.model.Model;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.squareup.picasso.Picasso;
 
 import java.util.UUID;
 
@@ -91,7 +90,6 @@ public class MealAddFragment extends Fragment {
     }
 
     private void saveMeal(View view) {
-        pb.setVisibility(View.VISIBLE);
         if (nameEditText.getText().length() == 0 || descEditText.getText().length() == 0 || priceEditText.getText().length() == 0) {
             Snackbar.make(view, "You must provide a value for each of the fields", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
@@ -122,9 +120,11 @@ public class MealAddFragment extends Fragment {
                     }
                     else {
                         meal.setImageUrl(url);
+                        pb.setVisibility(View.VISIBLE);
                         Model.instance.addMeal(meal, new Model.AddMealListener() {
                             @Override
                             public void onComplete() {
+                                pb.setVisibility(View.INVISIBLE);
                                 Navigation.findNavController(saveBtn).popBackStack();
                             }
                         });
@@ -132,10 +132,9 @@ public class MealAddFragment extends Fragment {
                 }
             });
         }
-        pb.setVisibility(View.INVISIBLE);
     }
 
-    private void displayFailedError() {
+    protected void displayFailedError() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Operation Failed");
         builder.setMessage("Saving image failed, please try again later...");
