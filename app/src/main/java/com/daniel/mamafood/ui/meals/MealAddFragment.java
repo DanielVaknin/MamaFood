@@ -28,6 +28,9 @@ import com.daniel.mamafood.R;
 import com.daniel.mamafood.model.Meal;
 import com.daniel.mamafood.model.Model;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.squareup.picasso.Picasso;
 
 import java.util.UUID;
 
@@ -103,9 +106,13 @@ public class MealAddFragment extends Fragment {
             meal.setAddress(addressEditText.getText().toString());
             meal.setDeleted(false);
 
-            // TODO: add user id to meal
-//            meal.setUserId();
+            // Set user ID for the meal
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            if (user != null) {
+                meal.setUserId(user.getUid());
+            }
 
+            // Set image for the meal and add the meal
             BitmapDrawable drawable = (BitmapDrawable) avatarImageView.getDrawable();
             Model.instance.uploadImage(drawable.getBitmap(), meal.getId(), new Model.UploadImageListener() {
                 @Override
