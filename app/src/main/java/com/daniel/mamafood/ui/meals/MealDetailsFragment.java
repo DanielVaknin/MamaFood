@@ -1,5 +1,6 @@
 package com.daniel.mamafood.ui.meals;
 
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,11 +17,14 @@ import android.view.ViewGroup;
 import com.daniel.mamafood.R;
 import com.daniel.mamafood.model.Meal;
 import com.daniel.mamafood.model.Model;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
 public class MealDetailsFragment extends MealAddFragment {
 
     String mealId;
+    String mealUserId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,6 +57,9 @@ public class MealDetailsFragment extends MealAddFragment {
                 if (meal.getImageUrl() != null){
                     Picasso.get().load(meal.getImageUrl()).placeholder(R.drawable.meal_placeholder).into(avatarImageView);
                 }
+
+                mealUserId = meal.getUserId(); // Get meal user ID for future use
+                getActivity().invalidateOptionsMenu(); // now onCreateOptionsMenu(...) is called again
             }
         });
 
@@ -62,7 +69,11 @@ public class MealDetailsFragment extends MealAddFragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        inflater.inflate(R.menu.main, menu);
+        // Display options menu only when logged in as the user of the meal
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null && user.getUid().equals(mealUserId)) {
+            inflater.inflate(R.menu.main, menu);
+        }
     }
 
     @Override
