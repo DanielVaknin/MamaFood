@@ -1,6 +1,7 @@
 package com.daniel.mamafood.ui.login;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.daniel.mamafood.R;
@@ -44,6 +46,16 @@ public class loginFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         mAuth = FirebaseAuth.getInstance();
         signinBtn = view.findViewById(R.id.signin_button);
+        TextView signupLink = view.findViewById(R.id.login_link_signup_textview);
+
+        signupLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Start the Signup activity
+                Intent intent = new Intent(getContext(), loginFragment.class);
+                Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_registerFragment);
+            }
+        });
 
         signinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
