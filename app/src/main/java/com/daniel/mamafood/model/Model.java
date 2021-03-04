@@ -49,7 +49,22 @@ public class Model {
                 // Insert the new updated to the local DB
                 long lastU = 0;
                 for (Meal s: result) {
-                    modelSql.addMeal(s, null);
+                    if (s.getDeleted() == true) {
+                        modelSql.deleteMeal(s, new DeleteMealListener() {
+                            @Override
+                            public void onComplete() {
+                                Log.d("TAG", "Meal with id " + s.getId() + " was deleted from SQLite");
+                            }
+                        });
+                    }
+                    else {
+                        modelSql.addMeal(s, new AddMealListener() {
+                            @Override
+                            public void onComplete() {
+                                Log.d("TAG", "Meal with id " + s.getId() + " was added to SQLite");
+                            }
+                        });
+                    }
                     if (s.getLastUpdated() > lastU)
                         lastU = s.getLastUpdated();
                 }
@@ -93,10 +108,11 @@ public class Model {
         modelFirebase.updateMeal(meal, listener);
     }
 
-//    public interface DeleteMealListener extends AddMealListener {}
-//    public void deleteMeal(Meal meal, DeleteMealListener listener) {
-//        modelFirebase.deleteMeal(meal, listener);
-//    }
+    public interface DeleteMealListener extends AddMealListener {}
+    public void deleteMeal(Meal meal, DeleteMealListener listener) {
+        modelFirebase.deleteMeal(meal, listener);
+        modelSql.deleteMeal(meal, listener);
+    }
 
     public interface UploadImageListener extends Listener<String> {}
     public void uploadImage(Bitmap imageBmp, String name, final UploadImageListener listener){

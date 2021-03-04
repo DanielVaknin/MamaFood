@@ -25,6 +25,7 @@ public class MealDetailsFragment extends MealAddFragment {
 
     String mealId;
     String mealUserId;
+    Meal mMeal;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,6 +50,8 @@ public class MealDetailsFragment extends MealAddFragment {
         Model.instance.getMeal(mealId, new Model.GetMealListener() {
             @Override
             public void onComplete(Meal meal) {
+                mMeal = meal;
+
                 nameEditText.setText(meal.getName());
                 descEditText.setText(meal.getDescription());
                 addressEditText.setText(meal.getAddress());
@@ -86,7 +89,14 @@ public class MealDetailsFragment extends MealAddFragment {
                 return true;
 
             case R.id.action_delete:
-                Log.d("TAG", "Clicked on delete");
+                pb.setVisibility(View.VISIBLE);
+                Model.instance.deleteMeal(mMeal, new Model.DeleteMealListener() {
+                    @Override
+                    public void onComplete() {
+                        pb.setVisibility(View.INVISIBLE);
+                    }
+                });
+                Navigation.findNavController(getActivity(), R.id.nav_host_fragment).popBackStack();
                 return true;
         }
 

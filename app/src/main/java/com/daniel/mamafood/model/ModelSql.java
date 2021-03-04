@@ -15,11 +15,31 @@ public class ModelSql {
     public interface AddMealListener{
         void onComplete();
     }
+
     public void addMeal(Meal meal, Model.AddMealListener listener){
         class MyAsyncTask extends AsyncTask {
             @Override
             protected Object doInBackground(Object[] objects) {
                 AppLocalDb.db.mealDao().insertAll(meal);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Object o) {
+                super.onPostExecute(o);
+                if (listener  != null)
+                    listener.onComplete();
+            }
+        };
+        MyAsyncTask task = new MyAsyncTask();
+        task.execute();
+    }
+
+    public void deleteMeal(Meal meal, Model.DeleteMealListener listener) {
+        class MyAsyncTask extends AsyncTask {
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                AppLocalDb.db.mealDao().delete(meal);
                 return null;
             }
 
