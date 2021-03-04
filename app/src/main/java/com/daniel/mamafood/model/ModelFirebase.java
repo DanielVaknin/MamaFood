@@ -76,14 +76,14 @@ public class ModelFirebase {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d("TAG", "Meal added successfully!");
+                        Log.d("TAG", "Meal was added/updated successfully!");
                         listener.onComplete();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w("TAG", "Error adding meal", e);
+                        Log.w("TAG", "Error adding/updating a meal", e);
                         listener.onComplete();
                     }
                 });
@@ -93,18 +93,15 @@ public class ModelFirebase {
         addMeal(meal, listener);
     }
 
-    // TODO: Fix this with a delete marker on a meal to know when a meal is deleted
-//    public void deleteMeal(Meal meal, Model.DeleteMealListener listener) {
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        db.collection("meals").document(meal.getId())
-//                .delete()
-//                .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        listener.onComplete();
-//                    }
-//                });
-//    }
+    public void deleteMeal(Meal meal, Model.DeleteMealListener listener) {
+        meal.setDeleted(true);
+        updateMeal(meal, new Model.UpdateMealListener() {
+            @Override
+            public void onComplete() {
+                Log.d("TAG", "Meal with id: " + meal.getId().toString() + " was marked as deleted in Firebase");
+            }
+        });
+    }
 
     public void uploadImage(Bitmap imageBmp, String name, Model.UploadImageListener listener) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
