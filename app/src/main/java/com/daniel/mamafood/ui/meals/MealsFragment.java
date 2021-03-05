@@ -1,7 +1,6 @@
 package com.daniel.mamafood.ui.meals;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +30,7 @@ public class MealsFragment extends Fragment {
     ProgressBar pb;
     FloatingActionButton fab;
     SwipeRefreshLayout sref;
-    FirebaseAuth mAuth;
+    FirebaseUser currentUser;
 
     RecyclerView recyclerView;
     RecyclerViewAdapter recyclerViewAdapter;
@@ -46,8 +45,7 @@ public class MealsFragment extends Fragment {
         // Check if user is logged-in
         // Will be replaced with the below IF condition when it will work - we will check if the user is already signed in - if so,
         // we will navigate to "add meal" page, else, we will navigate to login page
-        mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser == null) {
             Navigation.findNavController(this.getActivity(), R.id.nav_host_fragment).navigate(R.id.action_nav_meals_to_loginFragment);
         }
@@ -96,7 +94,6 @@ public class MealsFragment extends Fragment {
             recyclerViewAdapter = new RecyclerViewAdapter(getContext(), mealArrayList, new RecyclerViewAdapter.ListItemClickListener() {
                 @Override
                 public void onListItemClick(int position) {
-                    Log.d("TAG", "Row was clicked: " + position);
                     String mealId = viewModel.getMealLiveData().getValue().get(position).getId();
                     MealsFragmentDirections.ActionNavMealsToMealDetails direction = MealsFragmentDirections.actionNavMealsToMealDetails(mealId);
                     Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(direction);

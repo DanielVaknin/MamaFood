@@ -9,6 +9,10 @@
             android:icon="@android:drawable/ic_menu_sort_by_size"
             android:title="@string/menu_meals" />
         <item
+            android:id="@+id/nav_myMeals"
+            android:icon="@android:drawable/ic_menu_sort_by_size"
+            android:title="@string/menu_myMeals" />
+        <item
             android:id="@+id/mapsFragment"
             android:icon="@android:drawable/ic_dialog_map"
             android:title="@string/menu_map" />

@@ -85,4 +85,16 @@
             android:name="mealId"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/nav_myMeals"
+        android:name="com.daniel.mamafood.ui.meals.MyMealsFragment"
+        android:label="My Meals"
+        tools:layout="@layout/fragment_my_meals" >
+        <action
+            android:id="@+id/action_nav_myMeals_to_mealDetailsFragment"
+            app:destination="@id/mealDetailsFragment" />
+        <action
+            android:id="@+id/action_nav_myMeals_to_mealAddFragment"
+            app:destination="@id/mealAddFragment" />
+    </fragment>
 </navigation>
