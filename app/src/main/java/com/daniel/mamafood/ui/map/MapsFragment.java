@@ -59,7 +59,7 @@ public class MapsFragment extends Fragment {
                 @Override
                 public boolean onMarkerClick(Marker marker) {
                     Log.d("TAG","Marker meal id: " + marker.getSnippet());
-                    MealsFragmentDirections.ActionNavMealsToMealDetails direction = MealsFragmentDirections.actionNavMealsToMealDetails(marker.getSnippet());
+                    MapsFragmentDirections.ActionMapsFragmentToMealDetailsFragment direction = MapsFragmentDirections.actionMapsFragmentToMealDetailsFragment(marker.getSnippet());
                     Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(direction);
                     return true;
                 }
