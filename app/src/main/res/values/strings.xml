@@ -9,6 +9,7 @@
     <string name="action_delete">Delete</string>
 
     <string name="menu_meals">Meals</string>
+    <string name="menu_myMeals">My Meals</string>
     <string name="menu_map">Map</string>
     <string name="menu_logout">Logout</string>
     <string name="menu_login">Login</string>
