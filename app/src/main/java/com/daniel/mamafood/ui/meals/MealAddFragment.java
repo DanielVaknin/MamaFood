@@ -104,10 +104,11 @@ public class MealAddFragment extends Fragment {
             meal.setAddress(addressEditText.getText().toString());
             meal.setDeleted(false);
 
-            // Set user ID for the meal
+            // Set user ID and name for the meal
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             if (user != null) {
                 meal.setUserId(user.getUid());
+                meal.setUserName(user.getDisplayName());
             }
 
             // Set image for the meal and add the meal

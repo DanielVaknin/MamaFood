@@ -20,6 +20,7 @@ public class Meal {
     private Double price;
     private String imageUrl;
     private String userId;
+    private String userName;
     private String address;
     private Long lastUpdated;
     private Boolean isDeleted;
@@ -32,6 +33,7 @@ public class Meal {
         result.put("price", price);
         result.put("imageUrl", imageUrl);
         result.put("userId", userId);
+        result.put("userName", userName);
         result.put("address", address);
         result.put("lastUpdated", FieldValue.serverTimestamp());
         result.put("isDeleted", isDeleted);
@@ -46,6 +48,7 @@ public class Meal {
         price = (Double)map.get("price");
         imageUrl = (String)map.get("imageUrl");
         userId = (String)map.get("userId");
+        userName = (String)map.get("userName");
         address = (String)map.get("address");
         Timestamp ts = (Timestamp) map.get("lastUpdated");
         lastUpdated = ts.getSeconds();
@@ -99,6 +102,14 @@ public class Meal {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getAddress() {

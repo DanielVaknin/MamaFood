@@ -6,7 +6,7 @@ import androidx.room.RoomDatabase;
 
 import com.daniel.mamafood.MyApplication;
 
-@Database(entities = {Meal.class}, version = 6)
+@Database(entities = {Meal.class}, version = 7)
 abstract class AppLocalDbRepository extends RoomDatabase {
     public abstract MealDao mealDao();
 }

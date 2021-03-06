@@ -49,14 +49,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         RecyclerViewViewHolder viewHolder = (RecyclerViewViewHolder) holder;
 
         viewHolder.txtView_name.setText(meal.getName());
-        viewHolder.txtView_price.setText(meal.getPrice().toString());
-
-        // Get seller name
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            String name = user.getDisplayName();
-            viewHolder.txtView_seller.setText(name);
-        }
+        viewHolder.txtView_seller.setText(meal.getUserName());
+        viewHolder.txtView_price.setText(meal.getPrice().toString() + " $");
 
         // Get image from Firestore using Picasso
         viewHolder.imgView_icon.setImageResource(R.drawable.meal_placeholder); // So that we'll first show the empty avatar as the load takes time

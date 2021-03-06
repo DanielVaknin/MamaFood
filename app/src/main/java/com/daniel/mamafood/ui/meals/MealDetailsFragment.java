@@ -37,9 +37,13 @@ public class MealDetailsFragment extends MealAddFragment {
 
         editImage.setVisibility(View.INVISIBLE);
         nameEditText.setEnabled(false);
+        nameEditText.setBackgroundResource(android.R.color.transparent);
         descEditText.setEnabled(false);
+        descEditText.setBackgroundResource(android.R.color.transparent);
         priceEditText.setEnabled(false);
+        priceEditText.setBackgroundResource(android.R.color.transparent);
         addressEditText.setEnabled(false);
+        addressEditText.setBackgroundResource(android.R.color.transparent);
         saveBtn.setVisibility(View.INVISIBLE);
         cancelBtn.setVisibility(View.INVISIBLE);
         pb.setVisibility(View.INVISIBLE);
