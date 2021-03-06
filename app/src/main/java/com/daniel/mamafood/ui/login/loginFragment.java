@@ -60,10 +60,7 @@ public class loginFragment extends Fragment {
                 EditText emailEditText = view.findViewById(R.id.login_email_edittext);
                 EditText passwordEditText = view.findViewById(R.id.login_password_edittext);
 
-                String email = emailEditText.getText().toString();
-                String password = passwordEditText.getText().toString();
-
-                AuthenticationHelper authenticationHelper = new AuthenticationHelper(email,password,getActivity(),view);
+                AuthenticationHelper authenticationHelper = new AuthenticationHelper(emailEditText,passwordEditText,getActivity(),view);
                 authenticationHelper.Login(R.id.action_loginFragment_to_nav_meals);
             }
         });

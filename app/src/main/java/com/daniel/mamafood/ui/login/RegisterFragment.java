@@ -50,36 +50,41 @@ public class RegisterFragment extends Fragment {
                 String email = emailEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
                 String userName = userNameEditText.getText().toString();
+                boolean isEmptyUserName = AuthenticationHelper.ValidateUserName(userNameEditText);
 
-                mAuth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    Log.d("TAG", "Email registration succeeded!");
-                                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if(AuthenticationHelper.ValidateEmailPassword(emailEditText,passwordEditText) && isEmptyUserName)
+                {
+                    mAuth.createUserWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        Log.d("TAG", "Email registration succeeded!");
+                                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-                                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                            .setDisplayName(userName)
-                                            .build();
+                                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                                .setDisplayName(userName)
+                                                .build();
 
-                                    user.updateProfile(profileUpdates)
-                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-                                                    if (task.isSuccessful()) {
-                                                        Log.d("TAG", "User profile updated.");
-                                                        Navigation.findNavController(view).popBackStack();
+                                        user.updateProfile(profileUpdates)
+                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if (task.isSuccessful()) {
+                                                            Log.d("TAG", "User profile updated.");
+                                                            Navigation.findNavController(view).popBackStack();
+                                                        }
                                                     }
-                                                }
-                                            });
-                                } else {
-                                    // If sign in fails, display a message to the user.
-                                    Log.w("TAG", "Email registration failed!", task.getException());
-                                    Toast.makeText(getContext(), "Registration failed. " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                                });
+                                    } else {
+                                        // If sign in fails, display a message to the user.
+                                        Log.w("TAG", "Email registration failed!", task.getException());
+                                        Toast.makeText(getContext(), "Registration failed. " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                            }
-                        });
+                            });
+                }
+
             }
         });
         return view;
