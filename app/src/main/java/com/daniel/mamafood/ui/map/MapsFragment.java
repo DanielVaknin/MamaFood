@@ -1,23 +1,34 @@
 package com.daniel.mamafood.ui.map;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
+
 import com.daniel.mamafood.MyApplication;
 import com.daniel.mamafood.R;
+import com.daniel.mamafood.model.Meal;
+import com.daniel.mamafood.ui.meals.MealsFragmentDirections;
+import com.daniel.mamafood.ui.meals.MealsViewModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
@@ -38,9 +49,22 @@ public class MapsFragment extends Fragment {
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            LatLng sydney = getLocationFromAddress("Amos Tel Aviv");
-            googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+            MealsViewModel viewModel = new ViewModelProvider(getParentFragment()).get(MealsViewModel.class);
+            LatLng location = null;
+            for (Meal m : viewModel.getMealLiveData().getValue()) {
+                location = getLocationFromAddress(m.getAddress());
+                googleMap.addMarker(new MarkerOptions().position(location).title(m.getAddress()).snippet(m.getId()));
+            }
+            googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(Marker marker) {
+                    Log.d("TAG","Marker meal id: " + marker.getSnippet());
+                    MapsFragmentDirections.ActionMapsFragmentToMealDetailsFragment direction = MapsFragmentDirections.actionMapsFragmentToMealDetailsFragment(marker.getSnippet());
+                    Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(direction);
+                    return true;
+                }
+            });
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(getLocationFromAddress("Israel"),8));
         }
     };
 
@@ -65,6 +89,7 @@ public class MapsFragment extends Fragment {
     public LatLng getLocationFromAddress(String strAddress) {
 
         Geocoder coder = new Geocoder(MyApplication.context);
+
         List<Address> address;
         LatLng p1 = null;
 
