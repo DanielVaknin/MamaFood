@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.daniel.mamafood.MainActivity;
 import com.daniel.mamafood.R;
 import com.daniel.mamafood.adapters.RecyclerViewAdapter;
 import com.daniel.mamafood.model.Meal;
@@ -34,7 +35,6 @@ public class MealsFragment extends Fragment {
 
     RecyclerView recyclerView;
     RecyclerViewAdapter recyclerViewAdapter;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

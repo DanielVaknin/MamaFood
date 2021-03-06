@@ -1,5 +1,6 @@
 package com.daniel.mamafood;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -23,6 +24,19 @@ import androidx.appcompat.widget.Toolbar;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+//    This should be called from MealsFragment
+//    public void refresh(View view){          //refresh is onClick name given to the button
+//        onRestart();
+//    }
+//    @Override
+//    protected void onRestart() {
+//
+//        // TODO Auto-generated method stub
+//        super.onRestart();
+//        Intent i = new Intent(MainActivity.this, MainActivity.class);  //your class
+//        startActivity(i);
+//        finish();
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
