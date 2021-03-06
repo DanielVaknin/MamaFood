@@ -44,7 +44,6 @@ public class loginFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
-        mAuth = FirebaseAuth.getInstance();
         signinBtn = view.findViewById(R.id.signin_button);
         TextView signupLink = view.findViewById(R.id.login_link_signup_textview);
 
@@ -60,39 +59,14 @@ public class loginFragment extends Fragment {
         signinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                final ProgressDialog progressDialog = new ProgressDialog(getActivity(),
-                        R.style.Theme_AppCompat_DayNight_Dialog);
-                progressDialog.setIndeterminate(true);
-                progressDialog.setMessage("Authenticating...");
-                progressDialog.show();
-
                 EditText emailEditText = view.findViewById(R.id.login_email_edittext);
                 EditText passwordEditText = view.findViewById(R.id.login_password_edittext);
 
                 String email = emailEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
 
-                mAuth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
-                                    Log.d("TAG", "signInWithEmail:success");
-                                    FirebaseUser user = mAuth.getCurrentUser();
-                                    Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_nav_meals);
-                                    progressDialog.dismiss();
-                                } else {
-                                    // If sign in fails, display a message to the user.
-                                    Log.w("TAG", "signInWithEmail:failure", task.getException());
-                                    Toast.makeText(getActivity().getApplicationContext(), "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
-                                    mySnackbar = Snackbar.make(view, "Failed Login", 20);
-                                    progressDialog.dismiss();
-                                }
-                            }
-                        });
+                AuthenticationHelper authenticationHelper = new AuthenticationHelper(email,password,getActivity(),view);
+                authenticationHelper.Login(R.id.action_loginFragment_to_nav_meals);
             }
         });
         return view;
