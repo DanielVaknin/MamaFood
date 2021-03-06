@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.daniel.mamafood.MainActivity;
 import com.daniel.mamafood.R;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,6 +38,7 @@ public class loginFragment extends Fragment {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
             Log.d("TAG", "Logged-in as " + currentUser.getEmail());
+            ((MainActivity)getActivity()).updateUserInfoInDrawer();
             Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigate(R.id.action_loginFragment_to_nav_meals);
         }
 

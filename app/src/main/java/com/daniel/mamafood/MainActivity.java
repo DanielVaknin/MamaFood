@@ -1,9 +1,8 @@
 package com.daniel.mamafood;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.Menu;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,20 +22,11 @@ import androidx.appcompat.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
 
+    DrawerLayout drawer;
+    NavigationView navigationView;
+    NavController navController;
+
     private AppBarConfiguration mAppBarConfiguration;
-//    This should be called from MealsFragment
-//    public void refresh(View view){          //refresh is onClick name given to the button
-//        onRestart();
-//    }
-//    @Override
-//    protected void onRestart() {
-//
-//        // TODO Auto-generated method stub
-//        super.onRestart();
-//        Intent i = new Intent(MainActivity.this, MainActivity.class);  //your class
-//        startActivity(i);
-//        finish();
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,28 +34,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-
-        // Place user information in the drawer
-        View headerView = navigationView.getHeaderView(0);
-        // Get user name, email and image views
-        TextView userNameTextView = headerView.findViewById(R.id.nav_header_userName_textView);
-        TextView userEmailTextView = headerView.findViewById(R.id.nav_header_userEmail_textView);
-        ImageView userImageView = headerView.findViewById(R.id.nav_header_user_imageView);
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            String name = user.getDisplayName();
-            String email = user.getEmail();
-            Uri photoUrl = user.getPhotoUrl();
-
-            userNameTextView.setText(name);
-            userEmailTextView.setText(email);
-
-            if (photoUrl != null){
-                Picasso.get().load(photoUrl).into(userImageView);
-            }
-        }
+        drawer = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -73,9 +43,10 @@ public class MainActivity extends AppCompatActivity {
                 R.id.nav_meals, R.id.nav_myMeals, R.id.mapsFragment, R.id.nav_logout)
                 .setDrawerLayout(drawer)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
+        updateUserInfoInDrawer();
+//        NavigationUI.setupWithNavController(navigationView, navController);
     }
 
     @Override
@@ -83,5 +54,24 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    public void updateUserInfoInDrawer() {
+        Log.d("TAG", "Updating drawer with user information...");
+        // Place user information in the drawer
+        View headerView = navigationView.getHeaderView(0);
+        // Get user name, email and image views
+        TextView userNameTextView = headerView.findViewById(R.id.nav_header_userName_textView);
+        TextView userEmailTextView = headerView.findViewById(R.id.nav_header_userEmail_textView);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            String name = user.getDisplayName();
+            String email = user.getEmail();
+
+            userNameTextView.setText(name);
+            userEmailTextView.setText(email);
+        }
+        NavigationUI.setupWithNavController(navigationView, navController);
     }
 }

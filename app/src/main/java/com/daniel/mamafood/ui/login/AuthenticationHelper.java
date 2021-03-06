@@ -30,7 +30,7 @@ public class AuthenticationHelper {
     final ProgressDialog progressDialog;
     private Snackbar loginSnackbar;
 
-    public AuthenticationHelper(String email, String password, Context context, View view )
+    public AuthenticationHelper(String email, String password, Context context, View view)
     {
         _email = email;
         _password = password;
@@ -57,7 +57,7 @@ public class AuthenticationHelper {
                             FirebaseUser user = mAuth.getCurrentUser();
 
                             Navigation.findNavController(_view).navigate(actionNavigation);
-                            ((Activity) _context).recreate();
+                            ((MainActivity)_context).updateUserInfoInDrawer();
                             progressDialog.dismiss();
                         } else {
                             // If sign in fails, display a message to the user.

@@ -69,11 +69,10 @@ public class RegisterFragment extends Fragment {
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     if (task.isSuccessful()) {
                                                         Log.d("TAG", "User profile updated.");
+                                                        Navigation.findNavController(view).popBackStack();
                                                     }
                                                 }
                                             });
-//                                    Navigation.findNavController(view).navigate(R.id.action_registerFragment_to_loginFragment);
-                                    Navigation.findNavController(view).popBackStack();
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.w("TAG", "Email registration failed!", task.getException());
