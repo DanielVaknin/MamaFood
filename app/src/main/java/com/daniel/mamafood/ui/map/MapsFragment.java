@@ -53,7 +53,10 @@ public class MapsFragment extends Fragment {
             LatLng location = null;
             for (Meal m : viewModel.getMealLiveData().getValue()) {
                 location = getLocationFromAddress(m.getAddress());
-                googleMap.addMarker(new MarkerOptions().position(location).title(m.getAddress()).snippet(m.getId()));
+                if (location != null) {
+                    googleMap.addMarker(new MarkerOptions().position(location).title(m.getAddress()).snippet(m.getId()));
+
+                }
             }
             googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
