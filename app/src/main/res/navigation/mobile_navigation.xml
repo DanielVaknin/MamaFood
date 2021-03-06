@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_meals">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/nav_meals"
@@ -75,14 +75,7 @@
         android:id="@+id/registerFragment"
         android:name="com.daniel.mamafood.ui.login.RegisterFragment"
         android:label="Register"
-        tools:layout="@layout/fragment_register" >
-        <action
-            android:id="@+id/action_registerFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
-        <action
-            android:id="@+id/action_registerFragment_to_nav_meals"
-            app:destination="@id/nav_meals" />
-    </fragment>
+        tools:layout="@layout/fragment_register" />
     <fragment
         android:id="@+id/mealUpdateFragment"
         android:name="com.daniel.mamafood.ui.meals.MealUpdateFragment"

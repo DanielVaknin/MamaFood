@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.daniel.mamafood.R;
 import com.daniel.mamafood.adapters.RecyclerViewAdapter;
 import com.daniel.mamafood.model.Meal;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,6 +28,8 @@ public class MyMealsFragment extends MealsFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = super.onCreateView(inflater, container, savedInstanceState);
+
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         // Override "add meal" button
         fab.setOnClickListener(new View.OnClickListener() {

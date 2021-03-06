@@ -42,14 +42,6 @@ public class MealsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_meals, container, false);
 
-        // Check if user is logged-in
-        // Will be replaced with the below IF condition when it will work - we will check if the user is already signed in - if so,
-        // we will navigate to "add meal" page, else, we will navigate to login page
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser == null) {
-            Navigation.findNavController(this.getActivity(), R.id.nav_host_fragment).navigate(R.id.action_nav_meals_to_loginFragment);
-        }
-
         // Floating action Button
         fab = view.findViewById(R.id.appbarmain_add_meal);
         fab.setOnClickListener(new View.OnClickListener() {

@@ -1,6 +1,5 @@
 package com.daniel.mamafood.ui.login;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.daniel.mamafood.R;
@@ -58,10 +56,7 @@ public class RegisterFragment extends Fragment {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
-                                    Log.d("TAG", "createUserWithEmail:success2");
-//                                    AuthenticationHelper authenticationHelper = new AuthenticationHelper(email,password,getActivity(),view);
-//                                    authenticationHelper.Login(R.id.action_registerFragment_to_nav_meals);
+                                    Log.d("TAG", "Email registration succeeded!");
                                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
                                     UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
@@ -77,12 +72,12 @@ public class RegisterFragment extends Fragment {
                                                     }
                                                 }
                                             });
-                                    Navigation.findNavController(view).navigate(R.id.action_registerFragment_to_loginFragment);
+//                                    Navigation.findNavController(view).navigate(R.id.action_registerFragment_to_loginFragment);
+                                    Navigation.findNavController(view).popBackStack();
                                 } else {
                                     // If sign in fails, display a message to the user.
-                                    Log.w("TAG", "createUserWithEmail:failure2", task.getException());
-                                    Toast.makeText(getContext(), "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
+                                    Log.w("TAG", "Email registration failed!", task.getException());
+                                    Toast.makeText(getContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
