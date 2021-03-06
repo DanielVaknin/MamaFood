@@ -9,6 +9,13 @@
     android:padding="16dp"
     tools:context=".ui.login.RegisterFragment">
 
+    <ImageView
+        android:layout_width="392dp"
+        android:layout_height="213dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="100dp"
+        android:src="@drawable/logo" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

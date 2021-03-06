@@ -46,7 +46,6 @@ public class RegisterFragment extends Fragment {
                 EditText passwordEditText = view.findViewById(R.id.register_password_edittext);
                 EditText userNameEditText = view.findViewById(R.id.register_user_name_edittext);
 
-
                 String email = emailEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
                 String userName = userNameEditText.getText().toString();
