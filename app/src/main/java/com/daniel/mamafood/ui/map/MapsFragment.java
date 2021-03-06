@@ -64,10 +64,6 @@ public class MapsFragment extends Fragment {
                     return true;
                 }
             });
-//            LatLng sydney = getLocationFromAddress("Amos Tel Aviv");
-//            googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-            //           googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
-            ;
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(getLocationFromAddress("Israel"),8));
         }
     };
