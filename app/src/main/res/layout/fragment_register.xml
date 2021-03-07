@@ -25,13 +25,15 @@
         android:id="@+id/register_user_name_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Name" />
+        android:hint="Name"
+        android:inputType="text"/>
 
     <EditText
         android:id="@+id/register_email_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email" />
+        android:hint="Email"
+        android:inputType="textEmailAddress"/>
 
     <EditText
         android:id="@+id/register_password_edittext"

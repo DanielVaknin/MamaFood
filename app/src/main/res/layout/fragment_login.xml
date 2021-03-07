@@ -26,7 +26,8 @@ tools:context=".ui.login.loginFragment">
     android:id="@+id/login_email_edittext"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:hint="Email" />
+    android:hint="Email"
+    android:inputType="textEmailAddress"/>
 
 <EditText
     android:id="@+id/login_password_edittext"
