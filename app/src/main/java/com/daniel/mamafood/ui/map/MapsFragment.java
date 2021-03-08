@@ -1,6 +1,7 @@
 package com.daniel.mamafood.ui.map;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -36,6 +37,8 @@ import java.util.List;
 
 public class MapsFragment extends Fragment {
 
+    ProgressDialog progress;
+
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
         /**
@@ -49,6 +52,8 @@ public class MapsFragment extends Fragment {
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
+            progress.dismiss();
+
             MealsViewModel viewModel = new ViewModelProvider(getParentFragment()).get(MealsViewModel.class);
             LatLng location = null;
             for (Meal m : viewModel.getMealLiveData().getValue()) {
@@ -76,7 +81,15 @@ public class MapsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_maps, container, false);
+        View view = inflater.inflate(R.layout.fragment_maps, container, false);
+
+        progress = new ProgressDialog(getContext());
+        progress.setTitle("Loading");
+        progress.setMessage("Wait while loading...");
+        progress.setCancelable(false);
+        progress.show();
+
+        return view;
     }
 
     @Override

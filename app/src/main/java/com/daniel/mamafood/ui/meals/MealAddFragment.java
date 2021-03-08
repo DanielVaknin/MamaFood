@@ -112,6 +112,7 @@ public class MealAddFragment extends Fragment {
             }
 
             // Set image for the meal and add the meal
+            saveBtn.setEnabled(false);
             BitmapDrawable drawable = (BitmapDrawable) avatarImageView.getDrawable();
             Model.instance.uploadImage(drawable.getBitmap(), meal.getId(), new Model.UploadImageListener() {
                 @Override
@@ -126,6 +127,7 @@ public class MealAddFragment extends Fragment {
                             @Override
                             public void onComplete() {
                                 pb.setVisibility(View.INVISIBLE);
+                                saveBtn.setEnabled(true);
                                 Navigation.findNavController(saveBtn).popBackStack();
                             }
                         });
