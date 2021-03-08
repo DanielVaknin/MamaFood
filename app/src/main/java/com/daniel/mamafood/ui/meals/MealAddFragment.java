@@ -46,6 +46,7 @@ public class MealAddFragment extends Fragment {
     EditText addressEditText;
     Button saveBtn;
     Button cancelBtn;
+    Button buyBtn;
     ProgressBar pb;
 
     @Override
@@ -62,6 +63,8 @@ public class MealAddFragment extends Fragment {
         addressEditText = view.findViewById(R.id.addmeal_address_edittext);
         saveBtn = view.findViewById(R.id.addmeal_save_btn);
         cancelBtn = view.findViewById(R.id.addmeal_cancel_btn);
+        buyBtn = view.findViewById(R.id.addmeal_buy_btn);
+        buyBtn.setVisibility(View.INVISIBLE);
         pb = view.findViewById(R.id.meal_add_pb);
         pb.setVisibility(View.INVISIBLE);
 

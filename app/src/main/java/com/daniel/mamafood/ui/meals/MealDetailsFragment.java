@@ -13,10 +13,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.daniel.mamafood.R;
 import com.daniel.mamafood.model.Meal;
 import com.daniel.mamafood.model.Model;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
@@ -46,6 +48,7 @@ public class MealDetailsFragment extends MealAddFragment {
         addressEditText.setBackgroundResource(android.R.color.transparent);
         saveBtn.setVisibility(View.INVISIBLE);
         cancelBtn.setVisibility(View.INVISIBLE);
+        buyBtn.setVisibility(View.VISIBLE);
         pb.setVisibility(View.INVISIBLE);
 
         mealId = MealDetailsFragmentArgs.fromBundle(getArguments()).getMealId();
@@ -58,8 +61,8 @@ public class MealDetailsFragment extends MealAddFragment {
 
                 nameEditText.setText(meal.getName());
                 descEditText.setText(meal.getDescription());
-                addressEditText.setText(meal.getAddress());
-                priceEditText.setText(meal.getPrice().toString());
+                addressEditText.setText("Address: " + meal.getAddress());
+                priceEditText.setText("Price ($): " + meal.getPrice().toString());
 
                 if (meal.getImageUrl() != null){
                     Picasso.get().load(meal.getImageUrl()).placeholder(R.drawable.meal_placeholder).into(avatarImageView);
@@ -67,6 +70,8 @@ public class MealDetailsFragment extends MealAddFragment {
 
                 mealUserId = meal.getUserId(); // Get meal user ID for future use
                 getActivity().invalidateOptionsMenu(); // now onCreateOptionsMenu(...) is called again
+
+                buyBtn.setOnClickListener(v -> Snackbar.make(v, "Great! The chef " + meal.getUserName() + " will contact you shortly :)", Snackbar.LENGTH_SHORT).show());
             }
         });
 

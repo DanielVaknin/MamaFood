@@ -39,6 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="SELLER"
+                app:layout_constraintBottom_toTopOf="@+id/meal_row_price"
                 app:layout_constraintStart_toStartOf="@+id/meal_row_name"
                 app:layout_constraintTop_toBottomOf="@+id/meal_row_name" />
 
