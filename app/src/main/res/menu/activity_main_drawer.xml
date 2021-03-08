@@ -5,6 +5,10 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/profileFragment"
+            android:icon="@drawable/ic_baseline_account"
+            android:title="@string/menu_profile" />
+        <item
             android:id="@+id/nav_meals"
             android:icon="@android:drawable/ic_menu_sort_by_size"
             android:title="@string/menu_meals" />

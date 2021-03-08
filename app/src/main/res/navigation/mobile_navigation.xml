@@ -97,4 +97,9 @@
             android:id="@+id/action_nav_myMeals_to_mealAddFragment"
             app:destination="@id/mealAddFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.daniel.mamafood.ui.login.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>
