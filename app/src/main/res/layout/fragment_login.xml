@@ -36,11 +36,12 @@ tools:context=".ui.login.loginFragment">
     android:hint="Password"
     android:inputType="textPassword" />
 
-<Button
-    android:id="@+id/signin_button"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Login" />
+    <Button
+        android:id="@+id/signin_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        app:backgroundTint="#06855B" />
 
     <TextView android:id="@+id/login_link_signup_textview"
         android:layout_width="fill_parent"

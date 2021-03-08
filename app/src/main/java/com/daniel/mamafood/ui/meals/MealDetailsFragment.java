@@ -62,6 +62,7 @@ public class MealDetailsFragment extends MealAddFragment {
                 nameEditText.setText(meal.getName());
                 descEditText.setText(meal.getDescription());
                 addressEditText.setText("Address: " + meal.getAddress());
+                addressEditText.setTextSize(16);
                 priceEditText.setText("Price ($): " + meal.getPrice().toString());
 
                 if (meal.getImageUrl() != null){

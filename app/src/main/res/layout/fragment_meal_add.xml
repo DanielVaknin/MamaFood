@@ -39,7 +39,7 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/addmeal_desc_edittext" />
+                app:layout_constraintTop_toBottomOf="@+id/addmeal_address_edittext" />
 
             <EditText
                 android:id="@+id/addmeal_desc_edittext"
@@ -63,6 +63,7 @@
                 android:id="@+id/addmeal_avatar_imageview"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_marginTop="8dp"
                 android:src="@drawable/meal_placeholder"
                 app:layout_constraintDimensionRatio="3:2"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -108,10 +109,10 @@
                 android:ems="10"
                 android:hint="Provide your address (example: beeri tel aviv)"
                 android:inputType="textPersonName"
-                android:textSize="14sp"
+                android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/addmeal_price_edittext" />
+                app:layout_constraintTop_toBottomOf="@+id/addmeal_desc_edittext" />
 
             <Button
                 android:id="@+id/addmeal_cancel_btn"
@@ -140,7 +141,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/addmeal_cancel_btn"
                 app:layout_constraintHorizontal_bias="0.48"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/addmeal_address_edittext" />
+                app:layout_constraintTop_toBottomOf="@+id/addmeal_price_edittext" />
 
             <Button
                 android:id="@+id/addmeal_buy_btn"
