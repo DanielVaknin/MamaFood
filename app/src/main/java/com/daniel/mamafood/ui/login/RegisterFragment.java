@@ -48,7 +48,6 @@ public class RegisterFragment extends Fragment {
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressDialog.show();
                 EditText emailEditText = view.findViewById(R.id.register_email_edittext);
                 EditText passwordEditText = view.findViewById(R.id.register_password_edittext);
                 EditText userNameEditText = view.findViewById(R.id.register_user_name_edittext);
@@ -60,6 +59,7 @@ public class RegisterFragment extends Fragment {
 
                 if(AuthenticationHelper.ValidateEmailPassword(emailEditText,passwordEditText) && isEmptyUserName)
                 {
+                    progressDialog.show();
                     mAuth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                                 @Override
