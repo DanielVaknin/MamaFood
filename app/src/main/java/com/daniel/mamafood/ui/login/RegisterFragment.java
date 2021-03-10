@@ -1,5 +1,6 @@
 package com.daniel.mamafood.ui.login;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.daniel.mamafood.R;
@@ -26,6 +28,7 @@ public class RegisterFragment extends Fragment {
 
     private FirebaseAuth mAuth;
     Button registerBtn;
+    ProgressDialog progressDialog;
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -38,10 +41,14 @@ public class RegisterFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_register, container, false);
 
         registerBtn = view.findViewById(R.id.register_button);
+        progressDialog = new ProgressDialog(getActivity(), R.style.Theme_AppCompat_DayNight_Dialog);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Authenticating...");
 
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog.show();
                 EditText emailEditText = view.findViewById(R.id.register_email_edittext);
                 EditText passwordEditText = view.findViewById(R.id.register_password_edittext);
                 EditText userNameEditText = view.findViewById(R.id.register_user_name_edittext);
@@ -80,6 +87,7 @@ public class RegisterFragment extends Fragment {
                                         Log.w("TAG", "Email registration failed!", task.getException());
                                         Toast.makeText(getContext(), "Registration failed. " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                     }
+                                    progressDialog.dismiss();
                                 }
                             });
                 }
