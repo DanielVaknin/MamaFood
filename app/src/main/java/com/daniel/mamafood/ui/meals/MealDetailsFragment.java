@@ -72,6 +72,11 @@ public class MealDetailsFragment extends MealAddFragment {
                 mealUserId = meal.getUserId(); // Get meal user ID for future use
                 getActivity().invalidateOptionsMenu(); // now onCreateOptionsMenu(...) is called again
 
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user != null && user.getUid().equals(mealUserId)) {
+                    buyBtn.setVisibility(View.INVISIBLE);
+                }
+
                 buyBtn.setOnClickListener(v -> Snackbar.make(v, "Great! The chef " + meal.getUserName() + " will contact you shortly :)", Snackbar.LENGTH_SHORT).show());
             }
         });
