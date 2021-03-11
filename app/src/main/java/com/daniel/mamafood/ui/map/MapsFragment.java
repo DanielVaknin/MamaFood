@@ -52,8 +52,6 @@ public class MapsFragment extends Fragment {
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            progress.dismiss();
-
             MealsViewModel viewModel = new ViewModelProvider(getParentFragment()).get(MealsViewModel.class);
             LatLng location = null;
             for (Meal m : viewModel.getMealLiveData().getValue()) {
@@ -73,6 +71,7 @@ public class MapsFragment extends Fragment {
                 }
             });
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(getLocationFromAddress("Israel"),8));
+            progress.dismiss();
         }
     };
 
